@@ -1,11 +1,34 @@
-import  {DefaultUserList,UserInfo } from '../models/users'
+import  {DefaultUserList,UserInfo } from '../../models/users'
+import { router } from  '@kit.ArkUI'
 
 @Component
 struct Connect {
+
+  @State
+  filterList: UserInfo[] =[]
+  //定义一个筛选字段和筛选后的数组
+  @State
+  @Watch('filterName')
+  searchName: string = ''
+
+  filterName(){
+    this.filterList = DefaultUserList.filter((user:UserInfo)=>{
+      return  user.username.includes(this.searchName)
+    })
+  }
+
+
+
+  aboutToAppear(): void {
+    // 一进页面要展示默认列表进入后
+    this.filterList = DefaultUserList
+  }
+
   build() {
     Column(){
       Row(){
-        Search({placeholder:"搜索"})
+        //搜索输入框
+        Search({placeholder:"搜索",value:$$this.searchName})
           .height(30)
           .backgroundColor($r('app.color.white'))
           .borderRadius(4)
@@ -15,7 +38,7 @@ struct Connect {
         right: 10
       })
       List(){
-        ForEach(DefaultUserList,(item:UserInfo) =>{
+        ForEach(this.filterList, (item: UserInfo) => {
           ListItem(){
             Row({space :10}){
               Image(item.avatar)
@@ -43,6 +66,12 @@ struct Connect {
               }
             })
           }
+          .onClick(()=>{
+            router.pushUrl({
+              url:'pages/ChaatDetails/ChaatDetails',
+              params:item
+            })
+          })
         }, (item: UserInfo) => item.user_id)
       }
       .backgroundColor(Color.White)

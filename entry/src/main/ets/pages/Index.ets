@@ -1,5 +1,5 @@
 import { TabBarClass } from '../models/tab'
-import Connect from './Connect'
+import Connect from './Connect/Connect'
 
 @Entry
 @Component
