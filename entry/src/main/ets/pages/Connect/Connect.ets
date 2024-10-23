@@ -1,6 +1,7 @@
 import  {DefaultUserList,UserInfo } from '../../models/users'
 import { router } from  '@kit.ArkUI'
 
+@Entry
 @Component
 struct Connect {
 
@@ -68,7 +69,7 @@ struct Connect {
           }
           .onClick(()=>{
             router.pushUrl({
-              url:'pages/ChaatDetails/ChaatDetails',
+              url:'pages/ChatDetail/ChatDetail',
               params:item
             })
           })
